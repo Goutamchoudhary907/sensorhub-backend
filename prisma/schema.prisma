@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model Device{
+  id              String   @id @default(cuid())
+  name            String
+  status          String
+  telemetry       Telemetry[]
+  subscription    Subscription[]
+  lastMetric      String?
+  lastValue       Float?
+  lastUpdatedAt   DateTime?
+  
+}
+
+model Telemetry{
+  id        String  @id @default(cuid())
+  device    Device  @relation(fields: [deviceId], references: [id])
+  deviceId  String
+  metric    String
+  value     Float
+  status     String
+  ts         DateTime
+  eventId    String @unique 
+}
+
+model Subscription{
+  id                 String  @id @default(cuid())
+  device             Device  @relation(fields: [deviceId], references: [id])
+  deviceId           String  
+  planId             String
+  startDate          DateTime
+  endDate            DateTime
+  status             String
+  providerReference  String
+}
+model Client {
+  id     String @id @default(cuid())
+  name   String
+  apiKey String @unique
+
+  RelayLog RelayLog[]
+}
+
+model RelayLog {
+  id             String   @id @default(cuid())
+  client         Client   @relation(fields: [clientId], references: [id])
+  clientId       String
+  message        String
+  meta           String
+  status         String
+  retries        Int      @default(0)
+  idempotencyKey String   @unique
+  createdAt      DateTime @default(now())
+}
