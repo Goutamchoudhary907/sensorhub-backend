@@ -76,6 +76,12 @@ The server runs at:
 http://localhost:3000
 ```
 
+## Using the Live Backend
+
+The backend is also deployed at:
+
+https://sensorhub-backend.onrender.com
+
 ### Health endpoints:
 
 * `/health` → returns `{ status: "ok" }`
