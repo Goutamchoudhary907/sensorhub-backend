@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "281ed100-a10f-4368-ae33-d6b3da17f744",
+		"name": "Sensor Hub API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39799039"
+	},
+	"item": [
+		{
+			"name": "Telemetry Ping",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"deviceId\": \"123\",\r\n  \"metric\": \"temperature\",\r\n  \"value\": 27.5,\r\n  \"status\": \"OK\",\r\n  \"ts\": \"2025-09-14T10:00:00.000Z\",\r\n  \"eventId\": \"ping-001\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/telemetry/ping",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"telemetry",
+						"ping"
+					]
+				},
+				"description": "Ingests telemetry data from a device, updates the latest snapshot, rejects pings for inactive devices, and ensures idempotency using `eventId`."
+			},
+			"response": []
+		},
+		{
+			"name": "deviceStatus",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/device/latest?deviceId=123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"device",
+						"latest"
+					],
+					"query": [
+						{
+							"key": "deviceId",
+							"value": "123"
+						}
+					]
+				},
+				"description": "Fetches the latest status snapshot of a given device to verify whether it is active or inactive."
+			},
+			"response": []
+		},
+		{
+			"name": "billing",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"deviceId\": \"123\",\r\n  \"planId\": \"plan-basic\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/billing/subscribe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"billing",
+						"subscribe"
+					]
+				},
+				"description": "Activates a device by creating a yearly subscription, calls a mock payment endpoint, retries on failure, and stores subscription details with start and end dates."
+			},
+			"response": []
+		},
+		{
+			"name": "relay",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "test-api-key",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"clientId\": \"client-1\",\r\n  \"message\": \"Temperature alert\",\r\n   \"meta\": { \"type\": \"notification\" },\r\n  \"idempotencyKey\": \"relay-002\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/relay/publish",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"relay",
+						"publish"
+					]
+				},
+				"description": "Publishes a message to the relay endpoint on behalf of a client, requires an API key, retries on 5xx errors with backoff, and avoids duplicates using `idempotencyKey`."
+			},
+			"response": []
+		},
+		{
+			"name": "mock-relay",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"message\": \"Test message\",\r\n  \"meta\": {\"deviceId\": \"123\", \"severity\": \"high\"}\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/mock-relay/receive",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"mock-relay",
+						"receive"
+					]
+				},
+				"description": "Internal endpoint simulating an external relay service, sometimes fails intentionally to test retry logic and logs all received messages."
+			},
+			"response": []
+		},
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"health"
+					]
+				},
+				"description": "Returns a simple JSON `{ status: \"ok\" }` to confirm the service is running and responding."
+			},
+			"response": []
+		},
+		{
+			"name": "Ready Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/ready",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"ready"
+					]
+				},
+				"description": "Runs a simple database check using Prisma.  \nReturns `{ \"status\": \"ready\" }` with 200 OK if the database is reachable,  \notherwise returns `{ \"status\": \"not-ready\" }` with 503 Service Unavailable."
+			},
+			"response": []
+		}
+	]
+}
