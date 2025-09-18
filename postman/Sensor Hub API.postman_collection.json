@@ -3,7 +3,8 @@
 		"_postman_id": "281ed100-a10f-4368-ae33-d6b3da17f744",
 		"name": "Sensor Hub API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "39799039"
+		"_exporter_id": "39799039",
+		"_collection_link": "https://www.postman.com/goutamchoudhary/workspace/my-workspace/collection/39799039-281ed100-a10f-4368-ae33-d6b3da17f744?action=share&source=collection_link&creator=39799039"
 	},
 	"item": [
 		{
@@ -21,12 +22,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/telemetry/ping",
-					"protocol": "http",
+					"raw": "https://sensorhub-backend.onrender.com/telemetry/ping",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"sensorhub-backend",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"telemetry",
 						"ping"
@@ -42,12 +44,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/device/latest?deviceId=123",
-					"protocol": "http",
+					"raw": "https://sensorhub-backend.onrender.com/device/latest?deviceId=123",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"sensorhub-backend",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"device",
 						"latest"
@@ -78,12 +81,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/billing/subscribe",
-					"protocol": "http",
+					"raw": "https://sensorhub-backend.onrender.com/billing/subscribe",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"sensorhub-backend",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"billing",
 						"subscribe"
@@ -119,12 +123,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/relay/publish",
-					"protocol": "http",
+					"raw": "https://sensorhub-backend.onrender.com/relay/publish",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"sensorhub-backend",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"relay",
 						"publish"
@@ -149,12 +154,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/mock-relay/receive",
-					"protocol": "http",
+					"raw": "https://sensorhub-backend.onrender.com/mock-relay/receive",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"sensorhub-backend",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"mock-relay",
 						"receive"
@@ -170,12 +176,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/health",
-					"protocol": "http",
+					"raw": "https://sensorhub-backend.onrender.com/health",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"sensorhub-backend",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"health"
 					]
@@ -190,12 +197,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/ready",
-					"protocol": "http",
+					"raw": "https://sensorhub-backend.onrender.com/ready",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"sensorhub-backend",
+						"onrender",
+						"com"
 					],
-					"port": "3000",
 					"path": [
 						"ready"
 					]

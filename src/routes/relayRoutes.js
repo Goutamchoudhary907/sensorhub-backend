@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import axios from "axios"
 import { rateLimit } from "../utils/rateLimit.js";
 const prisma=new PrismaClient();
+const BASE_URL = process.env.BACKEND_URL || "http://localhost:3000";
 
 export default async function relayRoutes(fastify,options){
  // Mock relay endpoint -  random provider failure
@@ -70,7 +71,7 @@ export default async function relayRoutes(fastify,options){
         attempt++;
 
          const res = await axios.post(
-          "http://localhost:3000/mock-relay/receive",
+          `${BASE_URL}/mock-relay/receive`,
           { message, meta },
           { validateStatus: () => true } 
         );
