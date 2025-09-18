@@ -35,8 +35,10 @@ app.register(relayRoutes);
 
 // Only start the server if NOT in test mode
 if (process.env.NODE_ENV !== "test") {
-  app.listen({ port: 3000 })
-    .then(() => console.log('Server running on http://localhost:3000'))
+   const PORT = process.env.PORT || 3000;
+
+  app.listen({ port: Number(PORT), host: "0.0.0.0" })
+    .then(() => console.log(`Server running on http://0.0.0.0:${PORT}`))
     .catch(err => {
       app.log.error(err, "Failed to start server");
       process.exit(1);
