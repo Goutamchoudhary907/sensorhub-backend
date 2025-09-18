@@ -78,7 +78,6 @@ describe("SensorHub API Tests", () => {
         id: clientId,
         name: "Test Client",
         apiKey: "test-api-key"
-        // No isActive field in your schema
       }
     });
 
@@ -141,7 +140,7 @@ it("should deactivate device after subscription expiry", async () => {
   // Mock expiry by updating subscription in DB using the ID
   const pastDate = new Date(Date.now() - 1000 * 60 * 60 * 24); // 1 day ago
   await prisma.subscription.update({
-    where: { id: subscription.id }, // Use the subscription ID, not deviceId
+    where: { id: subscription.id }, 
     data: { endDate: pastDate, status: "expired" }
   });
 
@@ -159,5 +158,5 @@ it("should deactivate device after subscription expiry", async () => {
 
   expect(ping.status).toBe(403);
   expect(ping.body.error).toMatch(/no active subscription/i);
-}, 15000); // Increase timeout for retries
+}, 15000);
 });
